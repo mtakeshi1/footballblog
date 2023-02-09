@@ -1,0 +1,4 @@
+include             : [".htaccess", "players"]
+webrick:
+  headers:
+    Access-Control-Allow-Origin: "*"

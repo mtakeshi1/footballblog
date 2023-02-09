@@ -1,0 +1,47 @@
+---
+layout: default
+title: Player
+---
+
+
+
+<script>
+const labels = [
+"Goals + Assist", "xG", "xAG",  // results
+"Progressive Carries", "Progressive Passes", "Progressive Passes Rec",
+"Passes Attempted", "Pass Completion %", "Progressive Passes", "Assists", "Key Passes" // passing
+]
+function selectPlayer() {
+
+}
+new Chart("playerChart", {
+  type: 'radar',
+  data: {
+    datasets: [{
+        data: []
+    }],
+    labels: labels
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Radar Statistics'
+      }
+    }
+  },
+});
+</script>
+
+<h4> Data from fbref.com </h4>
+
+<select id="selectedPlayer" onchange="selectPlayer()" >
+    <option disabled selected value> -- select an option -- </option>
+    {% for item in site.data.players %}
+        <option value="{{item.file}}" >
+            {{ item.name}}
+        </option>
+    {% endfor %}
+</select>
+<canvas id="playerChart" style="width:100%;max-width:700px"></canvas>
