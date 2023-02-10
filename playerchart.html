@@ -9,12 +9,53 @@ title: Player
 const labels = [
 "Goals + Assist", "xG", "xAG",  // results
 "Progressive Carries", "Progressive Passes", "Progressive Passes Rec",
-"Passes Attempted", "Pass Completion %", "Progressive Passes", "Assists", "Key Passes" // passing
+"Passes Attempted", "Pass Completion %", "Progressive Passes", "Assists", "Key Passes", "Crosses", // passing
+"Tackles", "Tackles Won", "Blocks", "Interceptions", "Touches", "Take-Ons Attempted", "Successful Take-Ons"
 ]
-function selectPlayer() {
+var chart;
 
+function playerDataRead(playerData, playerName, color) {
+  const localChart = chart;
+  const newDataSet = {
+    label: playerName,
+    backgroundColor: color,
+    data: []
+  }
+  const playerValues = {}
+  const lines = playerData.split("\n")
+  for (let i in lines) {
+    let parts = lines[i].split(",")
+    playerValues[parts[0]] = parts[parts.length-1]
+  }
+  for (let l in labels) {
+    let ll = labels[l]
+    let v = playerValues[ll]
+    if(!v) v = 0
+    newDataSet.data.push(v)
+  }
+  localChart.data.datasets.push(newDataSet)
+  localChart.update();
 }
-new Chart("playerChart", {
+
+function populateFromSelect(s, color) {
+  if(s.selectedIndex != -1) {
+    const player0 = s.value
+    const name = s.options[s.selectedIndex].text
+    $.get("players/" + player0, function(data) { playerDataRead(data, name, color)})
+  }
+}
+
+function selectPlayer() {
+  if(!chart) {
+    chart = initChart();
+  }
+  chart.data.datasets.length = 0
+  populateFromSelect(document.getElementById('selectedPlayerBlue'), 'rgba(54, 162, 235, 0.2)')
+  populateFromSelect(document.getElementById('selectedPlayerRed'), 'rgba(255, 99, 132, 0.2)')
+}
+
+function initChart() {
+  return new Chart(document.getElementById("playerChart"), {
   type: 'radar',
   data: {
     datasets: [{
@@ -32,16 +73,26 @@ new Chart("playerChart", {
     }
   },
 });
+  
+}
 </script>
 
-<h4> Data from fbref.com </h4>
+<h4> Data from fbref.com - Percentiles per 90 minutes </h4>
 
-<select id="selectedPlayer" onchange="selectPlayer()" >
+<select id="selectedPlayerBlue" onchange="selectPlayer()" >
     <option disabled selected value> -- select an option -- </option>
-    {% for item in site.data.players %}
+    {% for item in site.data.player_fb %}
         <option value="{{item.file}}" >
             {{ item.name}}
         </option>
     {% endfor %}
 </select>
-<canvas id="playerChart" style="width:100%;max-width:700px"></canvas>
+<select id="selectedPlayerRed" onchange="selectPlayer()" >
+  <option disabled selected value> -- select an option -- </option>
+  {% for item in site.data.player_fb %}
+      <option value="{{item.file}}" >
+          {{ item.name}}
+      </option>
+  {% endfor %}
+</select>
+<canvas id="playerChart" style="width:100%;max-width:700px" onload="initChart()" ></canvas>
