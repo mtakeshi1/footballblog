@@ -3,7 +3,7 @@
     {% if page.url == item.link %}
        {{item.name }}
     {% else %}
-      <a href="{{ item.link }}">
+      <a href="{{ item.link | relative_url }}">
         {{ item.name }}
       </a>
     {% endif %}
