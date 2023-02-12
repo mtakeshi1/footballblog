@@ -1,0 +1,13 @@
+---
+layout: default
+title: Team
+---
+<br/>
+<select id="selectedTeam" onchange="selectTeam()" >
+    <option disabled selected value> -- select an option -- </option>
+    {% for item in site.data.teams %}
+        <option value="{{item.url}}" >
+            {{ item.name}}
+        </option>
+    {% endfor %}
+</select>
