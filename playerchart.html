@@ -93,7 +93,7 @@ function loadPlayers(teamSelectId, playerSelectId) {
       let lines = data.split("\n")
       for(let lineIndex in lines) {
         let line = lines[lineIndex]
-        if(line.startsWith("player")) continue
+        if(line.startsWith("player") || line.length == 0) continue
         let parts = line.split(",")
         let name = parts[0] + " ( " + parts[2] + " ) "
         let url = parts[1]
@@ -103,6 +103,7 @@ function loadPlayers(teamSelectId, playerSelectId) {
         playerSelect.add(op)
         
       }
+      selectPlayer()
     })
   }
 }
