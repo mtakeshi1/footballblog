@@ -41,7 +41,7 @@ function populateFromSelect(s, color) {
   if(s.selectedIndex != -1) {
     const player0 = s.value
     const name = s.options[s.selectedIndex].text
-    $.get("players/" + player0, function(data) { playerDataRead(data, name, color)})
+    $.get(player0, function(data) { playerDataRead(data, name, color)})
   }
 }
 
@@ -75,26 +75,76 @@ function initChart() {
 });
   
 }
+
+function loadPlayers(teamSelectId, playerSelectId) {
+  teamSelect = document.getElementById(teamSelectId)
+  playerSelect = document.getElementById(playerSelectId)
+  if(teamSelect.selectedIndex != -1) {
+    const teamName = teamSelect.value
+    $.get("players/" + teamName + "/players.csv", function(data) { 
+      let options = playerSelect.getElementsByTagName('option')
+      for(var i = options.length; i--; ) {
+        playerSelect.removeChild(options[i])
+      }
+      op = document.createElement('option')
+      op.disabled = true
+      op.text = "-- select a player --"
+      playerSelect.add(op)
+      let lines = data.split("\n")
+      for(let lineIndex in lines) {
+        let line = lines[lineIndex]
+        if(line.startsWith("player")) continue
+        let parts = line.split(",")
+        let name = parts[0] + " ( " + parts[2] + " ) "
+        let url = parts[1]
+        op = document.createElement('option')
+        op.value = url
+        op.text = name
+        playerSelect.add(op)
+        
+      }
+    })
+  }
+}
+
 </script>
 
 <h4> Data from fbref.com - Percentiles </h4>
-
-<select id="selectedPlayerBlue" onchange="selectPlayer()" >
-    <option disabled selected value> -- select an option -- </option>
-    {% for item in site.data.player_fb %}
-        <option value="{{item.file}}" >
-            {{ item.name}}
-        </option>
-    {% endfor %}
-</select>
-<select id="selectedPlayerRed" onchange="selectPlayer()" >
-  <option disabled selected value> -- select an option -- </option>
-  {% for item in site.data.player_fb %}
-      <option value="{{item.file}}" >
+<table>
+  <tr>
+    <td><select id="teamBlue" onchange="loadPlayers('teamBlue', 'selectedPlayerBlue');" >
+      <option disabled selected value> -- select an option -- </option>
+      {% for item in site.data.teams %}
+      <option value="{{item.name}}" >
           {{ item.name}}
       </option>
-  {% endfor %}
-</select>
+    {% endfor %}
+    </select></td>
+    <td>
+      <select id="teamRed" onchange="loadPlayers('teamRed', 'selectedPlayerRed');" >
+        <option disabled selected value> -- select an option -- </option>
+        {% for item in site.data.teams %}
+        <option value="{{item.name}}" >
+            {{ item.name}}
+        </option>
+      {% endfor %}
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td><select id="selectedPlayerBlue" onchange="selectPlayer()" >
+      <option disabled selected value> -- select an option -- </option>
+  </select></td>
+    <td><select id="selectedPlayerRed" onchange="selectPlayer()" >
+      <option disabled selected value> -- select an option -- </option>
+    </select></td>
+  </tr>
+</table>
+
+<br>
+
+
+
 <br>
 <div style="width: 450px; height: 450px" >
   <canvas id="playerChart" style="width: 400px; height: 400px" ></canvas>
