@@ -1,101 +1,101 @@
 Non-Penalty Goals,0.45,69
-Non-Penalty xG,0.33,43
-Shots Total,2.81,61
-Assists,0.06,23
-xAG,0.10,43
+Non-Penalty xG,0.33,45
+Shots Total,2.81,60
+Assists,0.06,25
+xAG,0.10,44
 npxG + xAG,0.43,40
-Shot-Creating Actions,2.81,76
-Passes Attempted,24.44,79
-Pass Completion %,66.4,37
+Shot-Creating Actions,2.81,77
+Passes Attempted,24.44,78
+Pass Completion %,66.4,38
 Progressive Passes,1.74,50
-Progressive Carries,1.63,71
-Successful Take-Ons,0.45,25
+Progressive Carries,1.63,72
+Successful Take-Ons,0.45,24
 Touches (Att Pen),4.10,33
-Progressive Passes Rec,7.42,91
+Progressive Passes Rec,7.42,90
 Tackles,0.67,57
-Interceptions,0.11,25
-Blocks,0.84,80
+Interceptions,0.11,24
+Blocks,0.84,79
 Clearances,0.45,20
 Aerials won,2.36,57
-Goals,0.45,57
-Assists,0.06,23
-Goals + Assists,0.51,42
+Goals,0.45,54
+Assists,0.06,25
+Goals + Assists,0.51,44
 Non-Penalty Goals,0.45,69
 Penalty Kicks Made,0.00,24
-Penalty Kicks Attempted,0.00,20
-Yellow Cards,0.22,30
-Red Cards,0.06,5
-xG,0.33,28
-Non-Penalty xG,0.33,43
-xAG,0.10,43
+Penalty Kicks Attempted,0.00,19
+Yellow Cards,0.22,28
+Red Cards,0.06,4
+xG,0.33,29
+Non-Penalty xG,0.33,45
+xAG,0.10,44
 npxG + xAG,0.43,40
-Progressive Carries,1.63,71
+Progressive Carries,1.63,72
 Progressive Passes,1.74,50
-Progressive Passes Rec,7.42,91
-Goals,0.45,57
-Shots Total,2.81,61
+Progressive Passes Rec,7.42,90
+Goals,0.45,54
+Shots Total,2.81,60
 Shots on target,1.12,61
-Shots on target %,40.0,58
+Shots on target %,40.0,57
 Goals/Shot,0.16,69
-Goals/Shot on target,0.40,64
+Goals/Shot on target,0.40,61
 Average Shot Distance,16.20,26
 Shots from free kicks,0.00,32
 Penalty Kicks Made,0.00,24
-Penalty Kicks Attempted,0.00,20
-xG,0.33,28
-Non-Penalty xG,0.33,43
-npxG/Sh,0.12,30
-Goals - xG,0.12,86
+Penalty Kicks Attempted,0.00,19
+xG,0.33,29
+Non-Penalty xG,0.33,45
+npxG/Sh,0.12,32
+Goals - xG,0.12,87
 Non-Penalty Goals - npxG,0.12,87
-Passes Completed,16.24,70
-Passes Attempted,24.44,79
-Pass Completion %,66.4,37
+Passes Completed,16.24,69
+Passes Attempted,24.44,78
+Pass Completion %,66.4,38
 Total Passing Distance,189.83,43
-Progressive Passing Distance,32.87,34
+Progressive Passing Distance,32.87,35
 Passes Completed (Short),10.84,87
 Passes Attempted (Short),14.78,92
-Pass Completion % (Short),73.4,31
-Passes Completed (Medium),3.60,35
-Passes Attempted (Medium),5.56,42
-Pass Completion % (Medium),64.6,28
+Pass Completion % (Short),73.4,29
+Passes Completed (Medium),3.60,37
+Passes Attempted (Medium),5.56,41
+Pass Completion % (Medium),64.6,26
 Passes Completed (Long),0.06,1
 Passes Attempted (Long),0.17,1
-Pass Completion % (Long),33.3,7
-Assists,0.06,23
-xAG,0.10,43
-Expected Assists,0.08,46
-Key Passes,1.07,63
+Pass Completion % (Long),33.3,6
+Assists,0.06,25
+xAG,0.10,44
+Expected Assists,0.08,47
+Key Passes,1.07,65
 Passes into Final Third,0.67,22
 Passes into Penalty Area,0.67,72
-Crosses into Penalty Area,0.06,55
+Crosses into Penalty Area,0.06,54
 Progressive Passes,1.74,50
-Passes Attempted,24.44,79
+Passes Attempted,24.44,78
 Live-ball passes,23.37,83
-Dead-ball passes,0.79,30
+Dead-ball passes,0.79,29
 Passes from Free Kicks,0.00,25
 Through Balls,0.11,63
 Switches,0.11,54
-Crosses,0.62,65
-Throw-Ins taken,0.06,29
+Crosses,0.62,63
+Throw-Ins taken,0.06,32
 Corner Kicks,0.00,40
 Inswinging Corner Kicks,0.00,45
 Outswinging Corner Kicks,0.00,46
 Straight Corner Kicks,0.00,49
-Passes Completed,16.24,70
-Passes Offside,0.28,5
-Passes Blocked,0.90,28
-Shot-Creating Actions,2.81,76
-SCA (PassLive),2.02,83
+Passes Completed,16.24,69
+Passes Offside,0.28,4
+Passes Blocked,0.90,26
+Shot-Creating Actions,2.81,77
+SCA (PassLive),2.02,82
 SCA (PassDead),0.00,34
-SCA (TO),0.17,54
-SCA (Sh),0.34,65
-SCA (Fld),0.22,58
-SCA (Def),0.06,80
-Goal-Creating Actions,0.11,8
+SCA (TO),0.17,56
+SCA (Sh),0.34,67
+SCA (Fld),0.22,57
+SCA (Def),0.06,81
+Goal-Creating Actions,0.11,7
 GCA (PassLive),0.06,11
 GCA (PassDead),0.00,48
 GCA (TO),0.00,27
-GCA (Sh),0.06,64
+GCA (Sh),0.06,66
 GCA (Fld),0.00,27
 GCA (Def),0.00,47
 Tackles,0.67,57
@@ -103,52 +103,52 @@ Tackles Won,0.45,69
 Tackles (Def 3rd),0.06,24
 Tackles (Mid 3rd),0.34,61
 Tackles (Att 3rd),0.28,74
-Dribblers Tackled,0.34,77
-Dribbles Challenged,0.73,57
-% of dribblers tackled,46.2,84
-Challenges Lost,0.39,59
-Blocks,0.84,80
+Dribblers Tackled,0.34,80
+Dribbles Challenged,0.73,61
+% of dribblers tackled,46.2,85
+Challenges Lost,0.39,58
+Blocks,0.84,79
 Shots Blocked,0.00,7
-Passes Blocked,0.84,86
-Interceptions,0.11,25
-Tkl+Int,0.79,49
+Passes Blocked,0.84,85
+Interceptions,0.11,24
+Tkl+Int,0.79,48
 Clearances,0.45,20
 Errors,0.00,51
-Touches,36.97,78
-Touches (Def Pen),0.79,35
-Touches (Def 3rd),1.85,24
-Touches (Mid 3rd),16.63,82
-Touches (Att 3rd),18.88,80
+Touches,36.97,79
+Touches (Def Pen),0.79,36
+Touches (Def 3rd),1.85,26
+Touches (Mid 3rd),16.63,80
+Touches (Att 3rd),18.88,81
 Touches (Att Pen),4.10,33
-Touches (Live-Ball),36.97,78
-Take-Ons Attempted,2.13,72
-Successful Take-Ons,0.45,25
+Touches (Live-Ball),36.97,79
+Take-Ons Attempted,2.13,73
+Successful Take-Ons,0.45,24
 Successful Take-On %,21.1,4
-Times Tackled During Take-On,1.46,85
-Tackled During Take-On Percentage,68.4,6
+Times Tackled During Take-On,1.46,86
+Tackled During Take-On Percentage,68.4,5
 Carries,20.45,76
 Total Carrying Distance,94.55,61
 Progressive Carrying Distance,34.89,59
-Progressive Carries,1.63,71
-Carries into Final Third,1.07,69
-Carries into Penalty Area,0.56,46
+Progressive Carries,1.63,72
+Carries into Final Third,1.07,70
+Carries into Penalty Area,0.56,47
 Miscontrols,3.54,20
-Dispossessed,1.35,43
+Dispossessed,1.35,40
 Passes Received,29.16,89
-Progressive Passes Rec,7.42,91
-Yellow Cards,0.22,30
-Red Cards,0.06,5
+Progressive Passes Rec,7.42,90
+Yellow Cards,0.22,28
+Red Cards,0.06,4
 Second Yellow Card,0.06,2
 Fouls Committed,1.63,26
-Fouls Drawn,1.85,80
+Fouls Drawn,1.85,79
 Offsides,0.39,72
-Crosses,0.62,65
-Interceptions,0.11,25
+Crosses,0.62,63
+Interceptions,0.11,24
 Tackles Won,0.45,69
-Penalty Kicks Won,0.00,29
+Penalty Kicks Won,0.00,28
 Penalty Kicks Conceded,0.00,51
 Own Goals,0.00,51
-Ball Recoveries,2.42,51
+Ball Recoveries,2.42,53
 Aerials won,2.36,57
 Aerials lost,2.98,54
-% of Aerials Won,44.2,60
+% of Aerials Won,44.2,61
