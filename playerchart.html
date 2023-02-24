@@ -7,7 +7,7 @@ title: Player
 
 <script>
 const labels = [
-"Goals + Assists", "xG", "xAG",  // results
+"Goals + Assists", "xAG",  // results
 "Progressive Carries", "Progressive Passes", "Progressive Passes Rec",
 "Passes Attempted", "Pass Completion %", "Progressive Passes", "Assists", "Key Passes", "Crosses", // passing
 "Tackles", "Tackles Won", "Blocks", "Interceptions", "Touches", "Take-Ons Attempted", "Successful Take-Ons"
@@ -79,6 +79,12 @@ function initChart() {
 function loadPlayers(teamSelectId, playerSelectId) {
   teamSelect = document.getElementById(teamSelectId)
   playerSelect = document.getElementById(playerSelectId)
+  position = playerSelect['position']
+  if(!position) {
+    position = /^(?!GK)/
+  }  else {
+    position = RegExp(position)
+  }
   if(teamSelect.selectedIndex != -1) {
     const teamName = teamSelect.value
     $.get("players/" + teamName + "/players.csv", function(data) { 
@@ -91,10 +97,12 @@ function loadPlayers(teamSelectId, playerSelectId) {
       op.text = "-- select a player --"
       playerSelect.add(op)
       let lines = data.split("\n")
+      lines.sort()
       for(let lineIndex in lines) {
         let line = lines[lineIndex]
         if(line.startsWith("player") || line.length == 0) continue
         let parts = line.split(",")
+        if(!position.exec(parts[2])) continue
         let name = parts[0] + " ( " + parts[2] + " ) "
         let url = parts[1]
         op = document.createElement('option')

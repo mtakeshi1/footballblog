@@ -4,5 +4,5 @@ title: About
 ---
 # About page
 
-Trying a little bit the jekyl + github actions.
+Trying a little bit the jekyl + github actions combo.
 

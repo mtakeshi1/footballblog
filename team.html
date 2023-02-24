@@ -1,13 +1,343 @@
 ---
 layout: default
-title: Team
+title: Team Comparison
+
+
 ---
-<br/>
-<select id="selectedTeam" onchange="selectTeam()" >
-    <option disabled selected value> -- select an option -- </option>
+<style>
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    div.radar {
+        width: 400px;
+        height: 500px;
+    }
+
+    td.position {
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+</style>
+<script>
+    const labelsPlayers = [
+        "Goals + Assists", "xAG",  // results
+        "Progressive Carries", "Progressive Passes", "Progressive Passes Rec",
+        "Passes Attempted", "Pass Completion %", "Progressive Passes", "Assists", "Key Passes", "Crosses", // passing
+        "Tackles", "Tackles Won", "Blocks", "Interceptions", "Touches", "Take-Ons Attempted", "Successful Take-Ons"
+    ]
+    const labelsGK = [
+        "PSxG-GA", "Goals Against", "Save Percentage", "Clean Sheet Percentage",
+        "Touches", "Crosses Stopped %", "Def. Actions Outside Pen. Area", "Pass Completion Percentage (Launched)"
+    ]
+    function initChart(chartId, labels) {
+        return new Chart(document.getElementById(chartId), {
+            type: 'radar',
+            data: {
+                datasets: [{
+                    data: []
+                }],
+                labels: labels
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Radar Statistics'
+                    }
+                }
+            },
+        });
+    }
+
+    playersLeft = []
+    playersRight = []
+    allCharts = {}
+
+    function updatePlayerSelect(playerSelect, playersCSV) {
+        position = playerSelect.attributes.pos.value
+        if (!position) {
+            position = /^(?!GK)/
+        } else {
+            position = RegExp(position)
+        }
+        let options = playerSelect.getElementsByTagName('option')
+        for (var i = options.length; i--;) {
+            playerSelect.removeChild(options[i])
+        }
+        op = document.createElement('option')
+        op.text = "-- select a team --"
+        playerSelect.add(op)
+        let lines = playersCSV.split("\n")
+        lines.sort()
+        for (let lineIndex in lines) {
+            let line = lines[lineIndex]
+            if (line.startsWith("player") || line.length == 0) continue
+            let parts = line.split(",")
+            if (!position.exec(parts[2])) continue
+            let name = parts[0]
+            let url = parts[1]
+            op = document.createElement('option')
+            op.value = url
+            op.text = name
+            playerSelect.add(op)
+
+        }
+    }
+
+    function selectTeam(teamSelectId, playerSuffix) {
+        teamSelect = document.getElementById(teamSelectId)
+        if (teamSelect.selectedIndex != -1) {
+            const teamName = teamSelect.value
+            $.get("players/" + teamName + "/players.csv", function (playersCSV) {
+                const allSelects = document.getElementsByTagName('select')
+                for (var i = 0; i < allSelects.length; i++) {
+                    const select = allSelects[i]
+                    if (!select || !select.attributes) {
+                    } else if (select.attributes.class.value == 'player' && select.id.endsWith(playerSuffix)) {
+                        updatePlayerSelect(select, playersCSV)
+                    }
+                }
+            })
+        }
+    }
+
+
+    function playerDataRead(playerData, playerName, color, chart, labels) {
+        const newDataSet = {
+            label: playerName,
+            backgroundColor: color,
+            data: []
+        }
+        const playerValues = {}
+        const lines = playerData.split("\n")
+        for (let i in lines) {
+            let parts = lines[i].split(",")
+            playerValues[parts[0]] = parts[parts.length - 1]
+        }
+        for (let l in labels) {
+            let ll = labels[l]
+            let v = playerValues[ll]
+            if (!v) v = 0
+            newDataSet.data.push(v)
+        }
+        chart.data.datasets.push(newDataSet)
+        chart.update();
+    }
+
+    function populateFromSelect(s, color, chart, labels) {
+        if (s.selectedIndex != -1) {
+            const player0 = s.value
+            const name = s.options[s.selectedIndex].text
+            $.get(player0, function (data) { playerDataRead(data, name, color, chart, labels) })
+        }
+    }
+    function playerSelected(selectPreffix, chartId, lbs) {
+        c = allCharts[chartId]
+        if (!lbs) { lbs = labelsPlayers }
+        if (!c) {
+            c = initChart(chartId, lbs)
+            allCharts[chartId] = c
+        }
+        c.data.datasets.length = 0
+        populateFromSelect(document.getElementById(selectPreffix + '_1'), 'rgba(54, 162, 235, 0.2)', c, lbs)
+        populateFromSelect(document.getElementById(selectPreffix + '_2'), 'rgba(255, 99, 132, 0.2)', c, lbs)
+    }
+
+
+</script>
+<br />
+Team selection:
+<br>
+<select id="selectedTeamLeft" class="team" onchange="selectTeam('selectedTeamLeft', '_1')">
+    <option disabled selected value> -- select a team -- </option>
     {% for item in site.data.teams %}
-        <option value="{{item.url}}" >
-            {{ item.name}}
-        </option>
+    <option value="{{item.name}}">
+        {{ item.name}}
+    </option>
     {% endfor %}
 </select>
+<select id="selectedTeamRight" class="team" onchange="selectTeam('selectedTeamRight', '_2')">
+    <option disabled selected value> -- select a team -- </option>
+    {% for item in site.data.teams %}
+    <option value="{{item.name}}">
+        {{ item.name}}
+    </option>
+    {% endfor %}
+</select>
+
+</br><Br>
+
+<table width="100%">
+    <tbody>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td class="position" colspan="12">
+                Goal Keeper
+                <br>
+                <select id="GK_1" class="player" pos="GK" onchange="playerSelected('GK', 'gkChart', labelsGK)">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="GK_2" class="player" pos="GK" onchange="playerSelected('GK', 'gkChart', labelsGK)">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="gkChart"></canvas>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="position" colspan="3">
+                Right Back
+                <br>
+                <select id="DR_1" class="player" pos="DF" onchange="playerSelected('DR', 'drChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="DR_2" class="player" pos="DF" onchange="playerSelected('DR', 'drChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="drChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="3">
+                Center Back (right)
+                <br>
+                <select id="DCR_1" class="player" pos="DF" onchange="playerSelected('DCR', 'dcrChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="DCR_2" class="player" pos="DF" onchange="playerSelected('DCR', 'dcrChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="dcrChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="3">
+                Center Back (left)
+                <br>
+                <select id="DCL_1" class="player" pos="DF" onchange="playerSelected('DCL', 'dclChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="DCL_2" class="player" pos="DF" onchange="playerSelected('DCL', 'dclChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="dclChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="3">
+                Left Back
+                <br>
+                <select id="DL_1" class="player" pos="DF" onchange="playerSelected('DL', 'dlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="DL_2" class="player" pos="DF" onchange="playerSelected('DL', 'dlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="dlChart"></canvas>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="position" colspan="4">
+                Right Midfielder
+                <br>
+                <select id="MR_1" class="player" pos="MF" onchange="playerSelected('MR', 'mrChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="MR_2" class="player" pos="MF" onchange="playerSelected('MR', 'mrChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="mrChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="4">
+                Center Midfielder
+                <br>
+                <select id="MC_1" class="player" pos="MF" onchange="playerSelected('MC', 'mcChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="MC_2" class="player" pos="MF" onchange="playerSelected('MC', 'mcChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="mcChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="4">
+                Left Midfielder
+                <br>
+                <select id="ML_1" class="player" pos="MF" onchange="playerSelected('ML', 'mlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="ML_2" class="player" pos="MF" onchange="playerSelected('ML', 'mlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="mlChart"></canvas>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="position" colspan="4">
+                Right Winger
+                <br>
+                <select id="AMR_1" class="player" pos="FW" onchange="playerSelected('AMR', 'amrChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="AMR_2" class="player" pos="FW" onchange="playerSelected('AMR', 'amlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="amrChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="4">
+                Striker
+                <br>
+                <select id="ST_1" class="player" pos="FW" onchange="playerSelected('ST', 'stChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="ST_2" class="player" pos="FW" onchange="playerSelected('ST', 'stChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="stChart"></canvas>
+                </div>
+            </td>
+            <td class="position" colspan="4">
+                Left Winger
+                <br>
+                <select id="AML_1" class="player" pos="FW" onchange="playerSelected('AML', 'amlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <select id="AML_2" class="player" pos="FW" onchange="playerSelected('AML', 'amlChart')">
+                    <option disabled selected value> -- select a team -- </option>
+                </select>
+                <div class="radar">
+                    <canvas id="amlChart"></canvas>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
